@@ -14,8 +14,17 @@ import StakeholderPage from "./landing-page/stakeholder/StakeholderPage";
 import TagPage from "./landing-page/tag/TagPage";
 import TestimonyPage from "./landing-page/testimony/TestimonyPage";
 import ArticlePage from "./blog/article/ArticlePage";
+import {
+    DASHBOARD_ACTIONS,
+    dashboardInitialState,
+    dashboardReducer,
+    DashboardStateProvider,
+    useDashboardState
+} from "./DashboardState";
+import gql from "graphql-tag";
+import {useQuery} from "@apollo/react-hooks";
 
-const drawerWidth = 400;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -38,17 +47,62 @@ const useStyles = makeStyles((theme) =>
         },
         content: {
             flexGrow: 1,
-            padding: theme.spacing(3),
+            padding: 0,
+            width: `calc(100% - ${drawerWidth}px)`
         },
     }),
 );
 
+const GET_STAKEHOLDERS = gql`
+    query GetStakeholders {
+        stakeholders {
+            id,
+            order,
+            title
+        }
+    }
+`;
+
+const GET_PROVIDERS = gql`
+    query GetProviders {
+        providers {
+            id,
+            order,
+            title
+        }
+    }
+`;
+
+// const GET_TAGS = gql``;
+
+
 const Dashboard = ({ match }) => {
     const classes = useStyles();
 
+    const { data: stakeholdersData, loading: stakeholdersLoading, error: stakeholdersError } = useQuery(GET_STAKEHOLDERS);
+    const { data: providersData, loading: providersLoading, error: providersError } = useQuery(GET_PROVIDERS);
+
+    const [{}, dashboardDispatch] = useDashboardState();
+
+    React.useEffect(() => {
+        if (!stakeholdersData) return;
+        dashboardDispatch({
+            type: DASHBOARD_ACTIONS.INIT_STAKEHOLDERS,
+            payload: stakeholdersData.stakeholders
+        })
+    }, [stakeholdersData]);
+
+    React.useEffect(() => {
+        if (!providersData) return;
+        dashboardDispatch({
+            type: DASHBOARD_ACTIONS.INIT_PROVIDERS,
+            payload: providersData.providers
+        })
+    }, [providersData]);
 
     return (
         <div className={classes.root}>
+
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" noWrap>
@@ -80,6 +134,7 @@ const Dashboard = ({ match }) => {
                     <Route path={match.url + "articles"} component={ArticlePage}/>
                 </Switch>
             </main>
+
         </div>
     )
 };

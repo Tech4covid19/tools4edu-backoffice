@@ -2,3 +2,21 @@ a:-webkit-any-link {
   text-decoration: none;
   color: inherit;
 }
+
+.te-form {
+  .input-single {
+    margin-bottom: 16px;
+  }
+
+  .form-actions {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    text-align: right;
+
+    .MuiButtonBase {
+      &-root {
+        margin-right: 12px;
+      }
+    }
+  }
+}

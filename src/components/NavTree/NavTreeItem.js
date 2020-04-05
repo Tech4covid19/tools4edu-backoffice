@@ -55,7 +55,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
     },
 }));
 
-const NavTreeItem = ({ history, itemLink, labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other }) => {
+const NavTreeItem = ({ history, itemLink, labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, staticContext, ...other }) => {
     const treeItemClasses = useTreeItemStyles();
 
     const activateRoute = () => {

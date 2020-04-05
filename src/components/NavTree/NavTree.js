@@ -6,15 +6,13 @@ import TreeView from '@material-ui/lab/TreeView';
 import NavTreeItem from "./NavTreeItem";
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AppsIcon from '@material-ui/icons/Apps';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import ViewListIcon from '@material-ui/icons/ViewList';
 import BookIcon from '@material-ui/icons/Book';
 
 const useTreeStyles = makeStyles({
     root: {
         height: 264,
         flexGrow: 1,
-        maxWidth: 400,
+        maxWidth: 300,
     },
 });
 
