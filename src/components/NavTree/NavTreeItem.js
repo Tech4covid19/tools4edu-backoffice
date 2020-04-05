@@ -2,6 +2,7 @@ import React from 'react';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from "@material-ui/core/styles";
+import { withRouter } from 'react-router';
 
 const useTreeItemStyles = makeStyles((theme) => ({
     root: {
@@ -54,13 +55,19 @@ const useTreeItemStyles = makeStyles((theme) => ({
     },
 }));
 
-const NavTreeItem = ({ labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other }) => {
+const NavTreeItem = ({ history, itemLink, labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other }) => {
     const treeItemClasses = useTreeItemStyles();
+
+    const activateRoute = () => {
+        if (itemLink) {
+            history.push(itemLink)
+        }
+    };
 
     return (
         <TreeItem
             label={
-                <div className={treeItemClasses.labelRoot}>
+                <div className={treeItemClasses.labelRoot} onClick={() => activateRoute()}>
                     <LabelIcon color="inherit" className={treeItemClasses.labelIcon} />
                     <Typography variant="body2" className={treeItemClasses.labelText}>
                         {labelText}
@@ -87,4 +94,4 @@ const NavTreeItem = ({ labelText, labelIcon: LabelIcon, labelInfo, color, bgColo
     )
 };
 
-export default NavTreeItem;
+export default withRouter(NavTreeItem);
