@@ -12,9 +12,11 @@ import {convertFromHTML, EditorState, ContentState} from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import Button from "@material-ui/core/Button";
 import {useDashboardState} from "../../../DashboardState";
+import replaceNull from "../../../../../utils/replaceNull";
 
 const defaultInitialValues = {
-    order: '',
+    order: 0,
+    type: 'CONTENT-TUTORIAL-VIDEO',
     videoUrl: '',
     videoTime: '',
     imageUrl: '',
@@ -43,13 +45,27 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                     )) :
                     new EditorState.createEmpty()
             }}
-            // validationSchema={ContentItemFormSchema}
+            validationSchema={ContentItemFormSchema}
             onSubmit={(values, { setSubmitting }) => {
+
+
                 let valuesToSubmit = {...values};
 
+                delete valuesToSubmit.id;
+                delete valuesToSubmit.createdAt;
+                delete valuesToSubmit.updatedAt;
+                delete valuesToSubmit.__typename;
+
                 delete valuesToSubmit.editorState;
+                delete valuesToSubmit.providers;
+                delete valuesToSubmit.stakeholders;
+                delete valuesToSubmit.tags;
 
                 valuesToSubmit.text = stateToHTML(values.editorState.getCurrentContent());
+
+                valuesToSubmit.providerIds = values.providers ? values.providers.map(p => p.id) : [];
+                valuesToSubmit.stakeholderIds = values.stakeholders ? values.stakeholders.map(s => s.id) : [];
+                valuesToSubmit.tagIds = values.tags ? values.tags.map(t => t.id) : [];
 
                 onSubmit(valuesToSubmit)
             }}
@@ -69,6 +85,7 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                 <form className="te-form te-content-item-form" onSubmit={handleSubmit}>
                     <div className="input-single">
                         <TextField name="order" label="Order"
+                                   type="number"
                                    fullWidth
                                    value={values.order}
                                    onChange={handleChange} onBlur={handleBlur} onFocus={handleFocus}
@@ -142,9 +159,9 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                             name="stakeholders"
                             options={stakeholders}
                             getOptionLabel={o => o.title}
-                            defaultValue={values.stakeholders ? values.stakeholders[0] : null}
+                            value={values.stakeholders ? values.stakeholders[0] : null}
                             onChange={(_, value) => {
-                                setFieldValue('stakeholders', [value.id]);
+                                setFieldValue('stakeholders', [value]);
                             }}
 
                             renderInput={params =>
@@ -163,9 +180,9 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                             name="providers"
                             options={providers}
                             getOptionLabel={o => o.title}
-                            defaultValue={values.providers ? values.providers[0] : null}
+                            value={values.providers ? values.providers[0] : null}
                             onChange={(_, value) => {
-                                setFieldValue('providers', [value.id]);
+                                setFieldValue('providers', [value]);
                             }}
 
                             renderInput={params =>
@@ -222,8 +239,7 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
 };
 
 const ContentItemFormSchema = Yup.object().shape({
-    email: Yup.string().email('Email is not valid').required('Email is required'),
-    password: Yup.string().required('Address is required'),
+    title: Yup.string().required('Title is required')
 });
 
 export default ContentItemForm;
