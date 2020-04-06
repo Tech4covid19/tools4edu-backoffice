@@ -12,7 +12,6 @@ import {convertFromHTML, EditorState, ContentState} from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import Button from "@material-ui/core/Button";
 import {useDashboardState} from "../../../DashboardState";
-import replaceNull from "../../../../../utils/replaceNull";
 
 const defaultInitialValues = {
     order: 0,
