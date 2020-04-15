@@ -49,7 +49,7 @@ const UPDATE_FAQ = gql`
 `;
 
 const FAQPage = () => {
-    const { loading, error, data, refetch: refetchContentItems } = useQuery(GET_FAQS);
+    const { loading, error, data, refetch: refetchFaqItems } = useQuery(GET_FAQS);
 
     const [ toast, setToast ] = React.useState(null);
 
@@ -62,7 +62,7 @@ const FAQPage = () => {
                 text: `Item Created`
             });
 
-            refetchContentItems();
+            refetchFaqItems();
 
             setCreatingItem(false);
         },
@@ -83,7 +83,7 @@ const FAQPage = () => {
                 text: 'Item Updated'
             });
 
-            refetchContentItems();
+            refetchFaqItems();
 
             setEditingItem(null);
         },

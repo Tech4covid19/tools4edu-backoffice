@@ -129,14 +129,16 @@ const ContentItemPage = () => {
               columns={[
                   { title: "Title", field: "title" },
                   { title: "Stakeholder", field: "stakeholder" },
-                  { title: "Provider", field: "provider"}
+                  { title: "Provider", field: "provider"},
+                  { title: "Tag", field: "tag"}
               ]}
               data={data && data.contentItems.map(item => (
                   {
                       id: item.id,
                       title: item.title,
                       stakeholder: item.stakeholders ? item.stakeholders.map(s => s.title).join(' ; ') : '',
-                      provider: item.providers ? item.providers.map(p => p.title).join(' ; ') : ''
+                      provider: item.providers ? item.providers.map(p => p.title).join(' ; ') : '',
+                      tag: item.tags ? item.tags.map(p => p.title).join(' ; ') : ''
                   }
               ))}
               actions={[

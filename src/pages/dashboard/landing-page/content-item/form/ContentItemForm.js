@@ -29,7 +29,7 @@ const defaultInitialValues = {
 };
 
 const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, actionLabel }) => {
-    const [{ stakeholders, providers }] = useDashboardState();
+    const [{ stakeholders, providers, tags }] = useDashboardState();
 
     const blocksFromHTML = convertFromHTML(initialValues ? initialValues.text : '');
 
@@ -191,6 +191,27 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                                            label="Provider"
                                            error={!!errors.providers && touched.providers}
                                            helperText={errors.providers && touched.providers ? errors.providers : ''}
+                                           variant="outlined" />
+                            }
+                        />
+                    </div>
+                    <div className="input-single">
+                        <Autocomplete
+                            name="tags"
+                            options={tags}
+                            getOptionLabel={o => o.title}
+                            value={values.tags ? values.tags[0] : null}
+                            onChange={(_, value) => {
+                                setFieldValue('tags', [value]);
+                            }}
+
+                            renderInput={params =>
+                                <TextField {...params}
+                                           name="tags"
+                                           onBlur={handleBlur} onFocus={handleFocus}
+                                           label="Tag"
+                                           error={!!errors.tags && touched.tags}
+                                           helperText={errors.tags && touched.tags ? errors.tags : ''}
                                            variant="outlined" />
                             }
                         />

@@ -73,7 +73,15 @@ const GET_PROVIDERS = gql`
     }
 `;
 
-// const GET_TAGS = gql``;
+const GET_TAGS = gql`
+    query GetContentTags {
+        contentTags {
+            id,
+            order,
+            title
+        }
+    }
+`;
 
 
 const Dashboard = ({ match }) => {
@@ -81,6 +89,7 @@ const Dashboard = ({ match }) => {
 
     const { data: stakeholdersData, loading: stakeholdersLoading, error: stakeholdersError } = useQuery(GET_STAKEHOLDERS);
     const { data: providersData, loading: providersLoading, error: providersError } = useQuery(GET_PROVIDERS);
+    const { data: tagsData, loading: tagsLoading, error: tagsError } = useQuery(GET_TAGS);
 
     const [{}, dashboardDispatch] = useDashboardState();
 
@@ -99,6 +108,14 @@ const Dashboard = ({ match }) => {
             payload: providersData.providers
         })
     }, [providersData]);
+
+    React.useEffect(() => {
+        if (!tagsData) return;
+        dashboardDispatch({
+            type: DASHBOARD_ACTIONS.INIT_TAGS,
+            payload: tagsData.contentTags
+        })
+    }, [tagsData]);
 
     return (
         <div className={classes.root}>
