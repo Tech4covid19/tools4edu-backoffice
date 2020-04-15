@@ -3,6 +3,13 @@ a:-webkit-any-link {
   color: inherit;
 }
 
+.MuiPaper-root {
+  .MuiTreeView-root {
+    padding: 16px;
+  }
+}
+
+
 .te-form {
   .input-single {
     margin-bottom: 16px;
