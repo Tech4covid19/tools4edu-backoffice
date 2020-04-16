@@ -6,7 +6,7 @@ import MaterialTable from "material-table";
 import {tableIcons} from "../../../../components/TableIcons/TableIcons";
 import Edit from '@material-ui/icons/Edit';
 import ContentItemForm from "./form/ContentItemForm";
-import FormDialog from "../../../../components/CreateEntityDialog/FormDialog";
+import FormDialog from "../../../../components/FormDialog/FormDialog";
 import Button from "@material-ui/core/Button";
 import {useDashboardState} from "../../DashboardState";
 import Toast from "../../../../components/Toast/Toast";

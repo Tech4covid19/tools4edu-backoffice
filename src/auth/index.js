@@ -7,6 +7,7 @@ export default class Auth {
     }
 
     login(loginData, history) {
+        console.log('login data', loginData)
         if (loginData.needsPasswordChange) {
             this.needsPasswordChange = true;
             return;

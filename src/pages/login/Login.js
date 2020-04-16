@@ -16,6 +16,9 @@ import Alert from "@material-ui/lab/Alert";
 import Auth from '../../auth';
 import {withRouter} from "react-router";
 import {DASHBOARD_ACTIONS, useDashboardState} from "../dashboard/DashboardState";
+import Dialog from "@material-ui/core/Dialog";
+import FormDialog from "../../components/FormDialog/FormDialog";
+import NewPasswordForm from "./form/NewPasswordForm";
 
 const auth = new Auth();
 
@@ -52,10 +55,29 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
+const SET_NEW_PASSWORD_MUTATION = gql`
+    mutation SetNewPassword($email: String!, $newPassword: String!, $oldPassword: String!) {
+        completeNewPasswordChallenge(user: {
+            email: $email,
+            newPassword: $newPassword,
+            oldPassword: $oldPassword
+        }) {
+            email,
+            accessToken,
+            refreshToken,
+            needPasswordChange
+        }
+    }
+`;
+
 function LoginPage({ history }) {
     const classes = useStyles();
 
+    const [isNeedNewPasswordOpened, setNewPasswordOpened] = React.useState(false);
+    const [currentUserData, setCurrentUserData] = React.useState(null);
+
     const [login, { loading: loginLoading, error: loginError, data: loginData }] = useMutation(LOGIN_MUTATION);
+    const [setNewPassword, { loading: newPwdLoading, error: newPwdError, data: newPwdData}] = useMutation(SET_NEW_PASSWORD_MUTATION);
 
     const handleSubmit = (values, { setSubmitting, setStatus, resetForm }) => {
         console.log('submit values', values);
@@ -66,6 +88,11 @@ function LoginPage({ history }) {
             if (data.login.needPasswordChange) {
                 console.log('needs pass change', data);
                 //TODO: Open password change modal
+                setCurrentUserData({
+                    email: values.email,
+                    password: values.password
+                });
+                setNewPasswordOpened(true);
                 return;
             }
             auth.login(data.login, history);
@@ -157,6 +184,29 @@ function LoginPage({ history }) {
                       )}
                 </Formik>
             </div>
+            <FormDialog
+                open={isNeedNewPasswordOpened}
+                title={'Set a password'}
+                formComponent={
+                    <NewPasswordForm
+                        actionLabel={'Submit'}
+                        onSubmit={(values) => {
+                            setNewPassword({ variables: {
+                                email: currentUserData.email,
+                                oldPassword: currentUserData.password,
+                                newPassword: values.password
+                            }})
+                                .then((result) => {
+                                    console.log('result new password', result.data);
+                                    auth.login(result.data.completeNewPasswordChallenge, history);
+                                })
+                                .catch(err => {
+                                    console.log('err new password', err);
+                                })
+                        }}
+                    />
+                }
+            />
         </Container>
     );
 }

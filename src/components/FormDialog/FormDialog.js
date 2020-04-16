@@ -5,8 +5,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function FormDialog({ title, open, onRequestCancel, onRequestSubmit, formComponent }) {
     return (
-        <Dialog open={open} aria-labelledby="te-create-entity-dialog-title">
-            <DialogTitle id="te-create-entity-dialog-title">{title}</DialogTitle>
+        <Dialog open={open} aria-labelledby="te-form-dialog-title">
+            <DialogTitle id="te-form-dialog-title">{title}</DialogTitle>
             <DialogContent>
                 { formComponent }
             </DialogContent>
