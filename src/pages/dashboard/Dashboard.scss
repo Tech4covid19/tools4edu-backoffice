@@ -5,6 +5,12 @@
     &-root {
       margin-top: 32px;
       margin-bottom: 32px;
+
+      .MuiToolbar-root {
+        display: flex;
+      }
     }
   }
+
+
 }

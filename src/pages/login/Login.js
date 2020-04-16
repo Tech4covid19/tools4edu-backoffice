@@ -15,6 +15,7 @@ import Alert from "@material-ui/lab/Alert";
 
 import Auth from '../../auth';
 import {withRouter} from "react-router";
+import {DASHBOARD_ACTIONS, useDashboardState} from "../dashboard/DashboardState";
 
 const auth = new Auth();
 
@@ -43,7 +44,10 @@ const LOGIN_MUTATION = gql`
         login(user: {
             email: $email, password: $password   
         }) {
-            accessToken
+            email,
+            accessToken,
+            refreshToken,
+            needPasswordChange
         }
     }
 `;
@@ -59,7 +63,12 @@ function LoginPage({ history }) {
             email: values.email,
             password: values.password
         }}).then(({ data }) => {
-            auth.login(data.login.accessToken, history);
+            if (data.login.needPasswordChange) {
+                console.log('needs pass change', data);
+                //TODO: Open password change modal
+                return;
+            }
+            auth.login(data.login, history);
             setSubmitting(false);
         }).catch(err => {
             if (JSON.stringify(err).includes('NotAuthorizedException')) {

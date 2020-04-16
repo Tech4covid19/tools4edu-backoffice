@@ -13,7 +13,8 @@ export const useDashboardState = () => useContext(DashboardStateContext);
 export const dashboardInitialState = {
     stakeholders: [],
     providers: [],
-    tags: []
+    tags: [],
+    user: null
 };
 
 export const DASHBOARD_ACTIONS = {
@@ -25,7 +26,8 @@ export const DASHBOARD_ACTIONS = {
     REMOVE_PROVIDER: 'REMOVE_PROVIDER',
     INIT_TAGS: 'INIT_TAGS',
     ADD_TAG: 'ADD_TAG',
-    REMOVE_TAG: 'REMOVE_TAG'
+    REMOVE_TAG: 'REMOVE_TAG',
+    SET_CURRENT_USER: 'SET_CURRENT_USER'
 };
 
 export const dashboardReducer = ( state, action ) => {
@@ -46,6 +48,12 @@ export const dashboardReducer = ( state, action ) => {
             return {
                 ...state,
                 tags: action.payload
+            };
+
+        case DASHBOARD_ACTIONS.SET_CURRENT_USER:
+            return {
+                ...state,
+                user: action.payload
             };
 
         default:

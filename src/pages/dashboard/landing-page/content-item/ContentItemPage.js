@@ -6,7 +6,7 @@ import MaterialTable from "material-table";
 import {tableIcons} from "../../../../components/TableIcons/TableIcons";
 import Edit from '@material-ui/icons/Edit';
 import ContentItemForm from "./form/ContentItemForm";
-import CreateEntityDialog from "../../../../components/CreateEntityDialog/CreateEntityDialog";
+import FormDialog from "../../../../components/CreateEntityDialog/FormDialog";
 import Button from "@material-ui/core/Button";
 import {useDashboardState} from "../../DashboardState";
 import Toast from "../../../../components/Toast/Toast";
@@ -157,7 +157,7 @@ const ContentItemPage = () => {
                   actionsColumnIndex: -1
               }}
             />
-            <CreateEntityDialog
+            <FormDialog
                 title="Create Content Item"
                 open={isCreatingItem}
                 formComponent={
@@ -176,7 +176,7 @@ const ContentItemPage = () => {
                 }
             />
 
-            <CreateEntityDialog
+            <FormDialog
                 title={`Edit '${isEditingItem ? isEditingItem.title : ''}'`}
                 open={!!isEditingItem}
                 formComponent={

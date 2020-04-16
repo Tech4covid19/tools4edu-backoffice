@@ -17,7 +17,7 @@ function App() {
             <Route path="/" render={props =>
                 auth.isAuthenticated() ? (
                     <DashboardStateProvider initialState={dashboardInitialState} reducer={dashboardReducer}>
-                        <DashboardPage/>
+                        <DashboardPage authService={auth}/>
                     </DashboardStateProvider>
                 ) : <Redirect to={{ pathname: '/login' }}/>
             }/>

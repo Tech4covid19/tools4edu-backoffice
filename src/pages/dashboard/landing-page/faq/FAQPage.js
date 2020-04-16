@@ -5,7 +5,7 @@ import MaterialTable from "material-table";
 import {tableIcons} from "../../../../components/TableIcons/TableIcons";
 import Edit from '@material-ui/icons/Edit';
 import FAQForm from "./form/FAQForm";
-import CreateEntityDialog from "../../../../components/CreateEntityDialog/CreateEntityDialog";
+import FormDialog from "../../../../components/CreateEntityDialog/FormDialog";
 import Button from "@material-ui/core/Button";
 import Toast from "../../../../components/Toast/Toast";
 
@@ -143,7 +143,7 @@ const FAQPage = () => {
                     actionsColumnIndex: -1
                 }}
             />
-            <CreateEntityDialog
+            <FormDialog
                 title="Create FAQ"
                 open={isCreatingItem}
                 formComponent={
@@ -162,7 +162,7 @@ const FAQPage = () => {
                 }
             />
 
-            <CreateEntityDialog
+            <FormDialog
                 title={`Edit '${isEditingItem ? isEditingItem.title : ''}'`}
                 open={!!isEditingItem}
                 formComponent={

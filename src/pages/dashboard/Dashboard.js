@@ -23,13 +23,23 @@ import {
 } from "./DashboardState";
 import gql from "graphql-tag";
 import {useQuery} from "@apollo/react-hooks";
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
+            display: 'flex'
+        },
+        toolBar: {
+            display: 'flex'
+        },
+        leftInfo: {
+            marginLeft: 'auto',
             display: 'flex',
+            alignItems: 'baseline',
+            fontSize: 16
         },
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
@@ -84,7 +94,7 @@ const GET_TAGS = gql`
 `;
 
 
-const Dashboard = ({ match }) => {
+const Dashboard = ({ match, authService, history }) => {
     const classes = useStyles();
 
     const { data: stakeholdersData, loading: stakeholdersLoading, error: stakeholdersError } = useQuery(GET_STAKEHOLDERS);
@@ -121,10 +131,14 @@ const Dashboard = ({ match }) => {
         <div className={classes.root}>
 
             <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
+                <Toolbar className={classes.toolBar}>
                     <Typography variant="h6" noWrap>
                         Tools4Edu Backoffice
                     </Typography>
+                    <div className="left-info" className={classes.leftInfo}>
+                        <Typography variant="p">{localStorage.getItem('t4e-email')}</Typography>
+                        <Button color="inherit" onClick={() => authService.logout(history)} className={classes.logoutBtn}>Logout</Button>
+                    </div>
                 </Toolbar>
             </AppBar>
             <Drawer
