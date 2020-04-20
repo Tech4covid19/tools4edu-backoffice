@@ -8,7 +8,6 @@ import Edit from '@material-ui/icons/Edit';
 import ContentItemForm from "./form/ContentItemForm";
 import FormDialog from "../../../../components/FormDialog/FormDialog";
 import Button from "@material-ui/core/Button";
-import {useDashboardState} from "../../DashboardState";
 import Toast from "../../../../components/Toast/Toast";
 
 
@@ -16,6 +15,7 @@ const GET_CONTENT_ITEMS = gql`
     query GetContentItems {
         contentItems {
             id,
+            type,
             order,
             videoUrl,
             videoTime,
@@ -116,6 +116,11 @@ const ContentItemPage = () => {
             data.contentItems.find(item => item.id === rowData.id)
         )
     };
+
+    React.useEffect(() => {
+        if (data)
+            console.log('items', data.contentItems)
+    }, [data])
 
     return (
         <div className="te-bo-page te-content-item-page">

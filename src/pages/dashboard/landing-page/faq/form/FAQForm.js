@@ -95,6 +95,7 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                     <div className="input-single">
                         <RichTextEditor
                             name="question"
+                            editorStateName="editorStateQuestion"
                             label="Question"
                             placeholder="Write here..."
                             editorState={values.editorStateQuestion}
@@ -105,6 +106,7 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                     <div className="input-single">
                         <RichTextEditor
                             name="answer"
+                            editorStateName="editorStateAnswer"
                             label="Answer"
                             placeholder="Write here..."
                             editorState={values.editorStateAnswer}

@@ -4,7 +4,7 @@ import './RichTextEditor.scss';
 
 export class RichTextEditor extends React.Component {
     onChange = editorState => {
-        this.props.onChange('editorState', editorState);
+        this.props.onChange(this.props.editorStateName || 'editorState', editorState);
     };
 
     focus = () => this.refs.editor.focus();

@@ -15,8 +15,6 @@ import Alert from "@material-ui/lab/Alert";
 
 import Auth from '../../auth';
 import {withRouter} from "react-router";
-import {DASHBOARD_ACTIONS, useDashboardState} from "../dashboard/DashboardState";
-import Dialog from "@material-ui/core/Dialog";
 import FormDialog from "../../components/FormDialog/FormDialog";
 import NewPasswordForm from "./form/NewPasswordForm";
 

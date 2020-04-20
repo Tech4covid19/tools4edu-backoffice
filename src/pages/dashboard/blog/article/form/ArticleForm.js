@@ -28,13 +28,13 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
         <Formik
             initialValues={{
                 ...initialValues,
-                editorStateSummary: initialValues && initialValues.answer !== '' ?
+                editorStateSummary: initialValues && initialValues.summary !== '' ?
                     new EditorState.createWithContent(ContentState.createFromBlockArray(
                         blocksFromHTMLSummary.contentBlocks,
                         blocksFromHTMLSummary.entityMap
                     )) :
                     new EditorState.createEmpty(),
-                editorStateText: initialValues && initialValues.answer !== '' ?
+                editorStateText: initialValues && initialValues.text !== '' ?
                     new EditorState.createWithContent(ContentState.createFromBlockArray(
                         blocksFromHTMLText.contentBlocks,
                         blocksFromHTMLText.entityMap
@@ -105,6 +105,7 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
                     <div className="input-single">
                         <RichTextEditor
                             name="summary"
+                            editorStateName="editorStateSummary"
                             label="Summary"
                             placeholder="Write here..."
                             editorState={values.editorStateSummary}
@@ -115,6 +116,7 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
                     <div className="input-single">
                         <RichTextEditor
                             name="text"
+                            editorStateName="editorStateText"
                             label="Text"
                             placeholder="Write here..."
                             editorState={values.editorStateText}

@@ -136,7 +136,7 @@ const Dashboard = ({ match, authService, history }) => {
                         Tools4Edu Backoffice
                     </Typography>
                     <div className="left-info" className={classes.leftInfo}>
-                        <Typography variant="p">{localStorage.getItem('t4e-email')}</Typography>
+                        <Typography variant="body1">{localStorage.getItem('t4e-email')}</Typography>
                         <Button color="inherit" onClick={() => authService.logout(history)} className={classes.logoutBtn}>Logout</Button>
                     </div>
                 </Toolbar>

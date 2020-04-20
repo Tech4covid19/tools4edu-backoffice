@@ -15,7 +15,7 @@ import {useDashboardState} from "../../../DashboardState";
 
 const defaultInitialValues = {
     order: 0,
-    type: 'CONTENT-TUTORIAL-VIDEO',
+    type: '',
     videoUrl: '',
     videoTime: '',
     imageUrl: '',
@@ -32,6 +32,8 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
     const [{ stakeholders, providers, tags }] = useDashboardState();
 
     const blocksFromHTML = convertFromHTML(initialValues ? initialValues.text : '');
+
+    const [formType, setFormType] = React.useState(null)
 
     return (
         <Formik
@@ -82,6 +84,32 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                   setFieldValue
               }) => (
                 <form className="te-form te-content-item-form" onSubmit={handleSubmit}>
+                    <div className="input-single">
+                        <Autocomplete
+                            name="type"
+                            options={[{ name: 'Artigo', value: 'CONTENT-ARTICLE' }, { name: 'Video', value: 'CONTENT-TUTORIAL-VIDEO'}]}
+                            getOptionLabel={o => o.name}
+                            getOptionSelected={o => o.value}
+                            value={values.type ?
+                                (
+                                    values.type === 'CONTENT-ARTICLE' ? { name: 'Artigo', value: 'CONTENT-ARTICLE'} : (
+                                        values.type === 'CONTENT-TUTORIAL-VIDEO' ? { name: 'Video', value: 'CONTENT-TUTORIAL-VIDEO'} : null
+                                    )
+                                )
+                                : null}
+                            onChange={(_, value) => {
+                                setFieldValue('type', value.value);
+                            }}
+
+                            renderInput={params =>
+                                <TextField {...params}
+                                           name="type"
+                                           onBlur={handleBlur} onFocus={handleFocus}
+                                           label="Type"
+                                           variant="outlined" />
+                            }
+                        />
+                    </div>
                     <div className="input-single">
                         <TextField name="order" label="Order"
                                    type="number"
@@ -136,6 +164,7 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                     <div className="input-single">
                         <RichTextEditor
                             name="text"
+                            editorStateName="editorState"
                             label="Text"
                             placeholder="Write here..."
                             editorState={values.editorState}

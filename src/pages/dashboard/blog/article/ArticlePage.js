@@ -144,7 +144,7 @@ const ArticlePage = () => {
                 }}
             />
             <FormDialog
-                title="Create FAQ"
+                title="Create Blog Article"
                 open={isCreatingItem}
                 formComponent={
                     <ArticleForm

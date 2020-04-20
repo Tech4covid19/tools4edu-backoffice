@@ -84,6 +84,7 @@ const TestimonyForm = ({ initialValues = defaultInitialValues, onSubmit, onCance
                     <div className="input-single">
                         <RichTextEditor
                             name="text"
+                            editorStateName="editorStateText"
                             label="Text"
                             placeholder="Write here..."
                             editorState={values.editorStateText}

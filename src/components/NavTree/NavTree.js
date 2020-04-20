@@ -30,9 +30,9 @@ const NavTree = () => {
         >
             <NavTreeItem nodeId="1" labelText="Landing Page" labelIcon={AccountBalanceIcon}>
                 <NavTreeItem nodeId="2" labelText="Content Items" labelIcon={AppsIcon} itemLink="/content-items"/>
-                <NavTreeItem nodeId="3" labelText="Providers" labelIcon={AppsIcon} itemLink="/providers"/>
-                <NavTreeItem nodeId="4" labelText="Stakeholders" labelIcon={AppsIcon} itemLink="/stakeholders"/>
-                <NavTreeItem nodeId="5" labelText="Tags" labelIcon={AppsIcon} itemLink="/tags"/>
+                {/*<NavTreeItem nodeId="3" labelText="Providers" labelIcon={AppsIcon} itemLink="/providers"/>*/}
+                {/*<NavTreeItem nodeId="4" labelText="Stakeholders" labelIcon={AppsIcon} itemLink="/stakeholders"/>*/}
+                {/*<NavTreeItem nodeId="5" labelText="Tags" labelIcon={AppsIcon} itemLink="/tags"/>*/}
                 <NavTreeItem nodeId="6" labelText="Testimonies" labelIcon={AppsIcon} itemLink="/testimonies"/>
                 <NavTreeItem nodeId="7" labelText="FAQs" labelIcon={AppsIcon} itemLink="/faqs"/>
             </NavTreeItem>
