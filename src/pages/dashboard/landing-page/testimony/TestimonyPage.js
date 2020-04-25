@@ -136,7 +136,7 @@ const TestimonyPage = () => {
                 }}
             />
             <FormDialog
-                title="Create FAQ"
+                title="Create Testimony"
                 open={isCreatingItem}
                 formComponent={
                     <TestimonyForm

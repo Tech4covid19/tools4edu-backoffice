@@ -63,7 +63,9 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                 valuesToSubmit.answer = stateToHTML(values.editorStateAnswer.getCurrentContent());
 
                 valuesToSubmit.providerId = values.provider ? values.provider.id : null;
-                valuesToSubmit.stakeholderId = values.stakeholders ? values.stakeholders.map(s => s.id) : null;
+                valuesToSubmit.stakeholderId = values.stakeholder ? values.stakeholder.id : null;
+
+                console.log(valuesToSubmit.providerId)
 
                 onSubmit(valuesToSubmit)
             }}
@@ -143,6 +145,7 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                             getOptionLabel={o => o.title}
                             value={values.provider ? values.provider : null}
                             onChange={(_, value) => {
+                                console.log('changed prov', value);
                                 setFieldValue('provider', value);
                             }}
 

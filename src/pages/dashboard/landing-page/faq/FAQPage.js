@@ -34,7 +34,7 @@ const CREATE_FAQ = gql`
     mutation CreateFaq($input: FaqInputCreate!) {
         faqCreate(input: $input) {
             id,
-            title
+            question
         }
     }
 `;
@@ -43,7 +43,7 @@ const UPDATE_FAQ = gql`
     mutation UpdateFaq($id: String!, $input: FaqInputUpdate!) {
         faqUpdate(id: $id, input: $input) {
             id,
-            title
+            question
         }
     }
 `;
@@ -163,7 +163,7 @@ const FAQPage = () => {
             />
 
             <FormDialog
-                title={`Edit '${isEditingItem ? isEditingItem.title : ''}'`}
+                title={`Edit '${isEditingItem ? isEditingItem.question : ''}'`}
                 open={!!isEditingItem}
                 formComponent={
                     <FAQForm
