@@ -1,7 +1,7 @@
 import ApolloClient from "apollo-boost";
 
 const client = new ApolloClient({
-    uri: 'https://cnom3x70jk.execute-api.eu-central-1.amazonaws.com/dev/graphql',
+    uri: process.env.GRAPHQL_BACKEND_URI,
     request: (operation) => {
         const token = localStorage.getItem('t4e-token');
         operation.setContext({
