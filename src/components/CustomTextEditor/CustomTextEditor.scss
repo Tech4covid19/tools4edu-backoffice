@@ -7,12 +7,13 @@
   .editor-label {
     color: rgba(0, 0, 0, 0.54);
     padding: 0;
-    font-size: 1rem;
+    font-size: 12px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 400;
     line-height: 1;
     letter-spacing: 0.00938em;
-    transform: translate(-55px, -6px) scale(0.75);
+    margin-left: 12px;
+    margin-bottom: 6px;
   }
 
   .rdw-editor-toolbar {
