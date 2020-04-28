@@ -6,11 +6,9 @@ import Switch from "@material-ui/core/Switch";
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { RichTextEditor } from "../../../../../components/RichTextEditor/RichTextEditor";
-import {convertFromHTML, EditorState, ContentState} from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
 import Button from "@material-ui/core/Button";
 import {useDashboardState} from "../../../DashboardState";
+import CustomTextEditor from "../../../../../components/CustomTextEditor/CustomTextEditor";
 
 const defaultInitialValues = {
     order: 0,
@@ -24,25 +22,10 @@ const defaultInitialValues = {
 const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, actionLabel }) => {
     const [{ stakeholders, providers }] = useDashboardState();
 
-    const blocksFromHTMLQuestion = convertFromHTML(initialValues ? initialValues.question : '');
-    const blocksFromHTMLAnswer = convertFromHTML(initialValues ? initialValues.answer : '');
-
     return (
         <Formik
             initialValues={{
                 ...initialValues,
-                editorStateQuestion: initialValues && initialValues.answer !== '' ?
-                    new EditorState.createWithContent(ContentState.createFromBlockArray(
-                        blocksFromHTMLQuestion.contentBlocks,
-                        blocksFromHTMLQuestion.entityMap
-                    )) :
-                    new EditorState.createEmpty(),
-                editorStateAnswer: initialValues && initialValues.answer !== '' ?
-                    new EditorState.createWithContent(ContentState.createFromBlockArray(
-                        blocksFromHTMLAnswer.contentBlocks,
-                        blocksFromHTMLAnswer.entityMap
-                    )) :
-                    new EditorState.createEmpty()
             }}
             onSubmit={(values, { setSubmitting }) => {
 
@@ -54,13 +37,8 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                 delete valuesToSubmit.updatedAt;
                 delete valuesToSubmit.__typename;
 
-                delete valuesToSubmit.editorStateQuestion;
-                delete valuesToSubmit.editorStateAnswer;
                 delete valuesToSubmit.provider;
                 delete valuesToSubmit.stakeholder;
-
-                valuesToSubmit.question = stateToHTML(values.editorStateQuestion.getCurrentContent());
-                valuesToSubmit.answer = stateToHTML(values.editorStateAnswer.getCurrentContent());
 
                 valuesToSubmit.providerId = values.provider ? values.provider.id : null;
                 valuesToSubmit.stakeholderId = values.stakeholder ? values.stakeholder.id : null;
@@ -95,25 +73,23 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                         />
                     </div>
                     <div className="input-single">
-                        <RichTextEditor
-                            name="question"
-                            editorStateName="editorStateQuestion"
+                        <CustomTextEditor
                             label="Question"
-                            placeholder="Write here..."
-                            editorState={values.editorStateQuestion}
-                            onChange={setFieldValue}
-                            onBlur={handleBlur} onFocus={handleFocus}
+                            placeholder="Write here"
+                            htmlContent={values.question}
+                            onContentChange={(value) => setFieldValue('question', value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">
-                        <RichTextEditor
-                            name="answer"
-                            editorStateName="editorStateAnswer"
+                        <CustomTextEditor
                             label="Answer"
-                            placeholder="Write here..."
-                            editorState={values.editorStateAnswer}
-                            onChange={setFieldValue}
-                            onBlur={handleBlur} onFocus={handleFocus}
+                            placeholder="Write here"
+                            htmlContent={values.answer}
+                            onContentChange={(value) => setFieldValue('answer', value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     </div>
 

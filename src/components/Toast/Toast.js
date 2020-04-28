@@ -7,6 +7,8 @@ function Alert(props) {
 }
 
 const Toast = ({ open, onRequestClose, type, text }) => {
+    if (!open) return null;
+
     return (
         <Snackbar open={open} autoHideDuration={6000} onClose={onRequestClose}>
             <Alert onClose={onRequestClose} severity={type || ''}>

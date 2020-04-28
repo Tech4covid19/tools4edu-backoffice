@@ -165,6 +165,7 @@ const ContentItemPage = () => {
             <FormDialog
                 title="Create Content Item"
                 open={isCreatingItem}
+                onRequestCancel={() => setCreatingItem(false)}
                 formComponent={
                     <ContentItemForm
                         actionLabel="Create"
@@ -184,6 +185,7 @@ const ContentItemPage = () => {
             <FormDialog
                 title={`Edit '${isEditingItem ? isEditingItem.title : ''}'`}
                 open={!!isEditingItem}
+                onRequestCancel={() => setEditingItem(null)}
                 formComponent={
                     <ContentItemForm
                         actionLabel="Edit"

@@ -81,10 +81,20 @@ const styleMap = {
         fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
         fontSize: 16,
         padding: 2,
-    },
+    }
 };
 function getBlockStyle(block) {
     switch (block.getType()) {
+        case 'header-1':
+            return 'RichEditor--mainTitles';
+        case 'header-2':
+            return 'RichEditor--title1';
+        case 'header-3':
+            return 'RichEditor--title2';
+        case 'header-4':
+            return 'RichEditor--title3';
+        case 'header-5':
+            return 'RichEditor-bodyTextLarge';
         case 'blockquote':
             return 'RichEditor-blockquote';
         default:
@@ -104,6 +114,9 @@ class StyleButton extends React.Component {
         if (this.props.active) {
             className += ' RichEditor-activeButton';
         }
+        if (this.props.customClass) {
+            className += ' ' + this.props.customClass;
+        }
         return (
             <span className={className} onMouseDown={this.onToggle}>
         {this.props.label}
@@ -112,12 +125,11 @@ class StyleButton extends React.Component {
     }
 }
 const BLOCK_TYPES = [
-    { label: 'H1', style: 'header-one' },
-    { label: 'H2', style: 'header-two' },
-    { label: 'H3', style: 'header-three' },
-    { label: 'H4', style: 'header-four' },
-    { label: 'H5', style: 'header-five' },
-    { label: 'H6', style: 'header-six' },
+    { label: 'Main Title', style: 'header-one', customClass: 'RichEditor-controls__mainTitle' },
+    { label: 'Title 1', style: 'header-two', customClass: 'RichEditor-controls__title1' },
+    { label: 'Title 2', style: 'header-three', customClass: 'RichEditor-controls__title2' },
+    { label: 'Title 3', style: 'header-four', customClass: 'RichEditor-controls__title3' },
+    { label: 'Body Large', style: 'header-five', customClass: 'RichEditor-controls__bodyLarge' },
     { label: 'Blockquote', style: 'blockquote' },
     { label: 'UL', style: 'unordered-list-item' },
     { label: 'OL', style: 'ordered-list-item' },
@@ -139,6 +151,7 @@ const BlockStyleControls = props => {
                     label={type.label}
                     onToggle={props.onToggle}
                     style={type.style}
+                    customClass={type.customClass}
                 />
             )}
         </div>
@@ -149,6 +162,7 @@ var INLINE_STYLES = [
     { label: 'Italic', style: 'ITALIC' },
     { label: 'Underline', style: 'UNDERLINE' },
     { label: 'Monospace', style: 'CODE' },
+    { label: 'Title 3', style: 'H3' }
 ];
 const InlineStyleControls = props => {
     var currentStyle = props.editorState.getCurrentInlineStyle();

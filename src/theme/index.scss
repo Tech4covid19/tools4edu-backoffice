@@ -1,0 +1,53 @@
+@import "variables";
+@import 'mixins';
+@import "reset";
+@import "components";
+
+body {
+  &.overflow-hidden {
+    overflow: hidden;
+  }
+
+  &.overlay {
+    .body-overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: $color-text-blue;
+      opacity: 0.6;
+      z-index: 150;
+    }
+  }
+}
+
+t4e-root {
+  .t4e-page-container {
+    padding-left: 220px;
+    padding-right: 220px;
+    max-width: 1000px; // 1440 - (220 + 220)
+    margin: 0 auto;
+
+    @include media-desktop {
+      padding-left: 150px;
+      padding-right: 150px;
+    }
+
+    @include media-laptop {
+      padding-left: 84px;
+      padding-right: 84px;
+    }
+
+    @include media-laptop-sm {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  .t4e-scroll-lock {
+    overflow: hidden;
+  }
+}

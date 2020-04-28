@@ -1,0 +1,281 @@
+@mixin media-mobile-sm {
+  @media (max-width: 375px) { @content }
+}
+
+@mixin media-mobile-l {
+  @media (max-width: 425px) { @content }
+}
+
+@mixin media-tablet {
+  @media (max-width: 767px) { @content }
+}
+
+@mixin media-laptop-sm {
+  @media (max-width: 900px) { @content }
+}
+
+@mixin media-laptop {
+  @media (max-width: 1024px) { @content }
+}
+
+@mixin media-desktop-sm {
+  @media (max-width: 1120px) { @content }
+}
+
+@mixin media-desktop {
+  @media (max-width: 1280px) { @content }
+}
+
+@mixin media-desktop-lg {
+  @media (max-width: 1440px) { @content }
+}
+
+@mixin font($name, $lineHeight: 1.25, $style: 'normal') {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-family:  map-get($font-families, $name), sans-serif;
+  font-weight:  unquote(map-get($font-weights, $name));
+  font-style:   unquote($style);
+  line-height:  $lineHeight;
+  font-size: unquote(map-get($font-sizes, $name));
+
+  //@if $name == bodyText {
+  //  font-size: unquote(map-get($font-sizes, bodyTextLarge));
+  //}
+  //
+  //@if $name == bodyTextHighlight {
+  //  font-size: unquote(map-get($font-sizes, bodyTextLargeHighlight));
+  //}
+
+  //@include media-tablet {
+  //  @if $name == bodyTextLarge {
+  //    font-size: unquote(map-get($font-sizes, bodyText))
+  //  }
+  //
+  //  @if $name == bodyTextLargeHighlight {
+  //    font-size: unquote(map-get($font-sizes, bodyTextHighlight))
+  //  }
+  //}
+
+}
+
+@mixin navMenuItem($color) {
+  padding: 8px 24px;
+  @include font('menuItems', 24px);
+  color: $color;
+  letter-spacing: 0.005em;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:after {
+      content: '';
+      display: block;
+      margin: 6px auto;
+      height: 3px;
+      width: 0;
+      background-color: transparent;
+      transition: width .5s ease, background-color .5s ease;
+    }
+
+    &:hover {
+      &:after {
+        width: 100%;
+        background-color: $color;
+      }
+    }
+
+    &.active {
+      &:after {
+        width: 100%;
+        background-color: $color;
+      }
+    }
+  }
+}
+
+@mixin containerPadding() {
+  padding-left: 220px;
+  padding-right: 220px;
+  //max-width: 1000px; // 1440 - (220 + 220)
+  //margin: 0 auto;
+
+  @include media-desktop {
+    padding-left: 84px;
+    padding-right: 84px;
+  }
+
+  @include media-desktop-sm {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @include media-laptop {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @include media-laptop-sm {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@mixin containerMargin() {
+  margin-left: 220px;
+  margin-right: 220px;
+  //max-width: 1000px; // 1440 - (220 + 220)
+  //margin: 0 auto;
+
+  @include media-desktop {
+    margin-left: 84px;
+    margin-right: 84px;
+  }
+
+  @include media-laptop {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  @include media-laptop-sm {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+}
+
+@mixin footerDimensions() {
+  max-width: 75%;
+  padding-left: 220px;
+
+  @include media-desktop {
+    padding-left: 84px;
+  }
+
+  @include media-laptop {
+    padding-left: 24px;
+  }
+
+  @include media-laptop-sm {
+    max-width: 80%;
+    padding-left: 24px;
+  }
+
+  @include media-tablet {
+    max-width: 95%;
+  }
+}
+
+@mixin bodyTextFormatting() {
+    h1 {
+      @include font('title1', 1);
+      margin: 0 0 24px;
+    }
+
+    h2 {
+      @include font('title2', 1);
+      margin: 0 0 16px;
+    }
+
+    h3 {
+      @include font('title3', 1);
+      margin: 0 0 12px;
+    }
+
+    h4 {
+
+    }
+
+    h5 {
+
+    }
+
+    h6 {
+      @include font('bodyTextLargeHighlight', 1);
+      margin: 0 0 6px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    blockquote {
+
+    }
+
+    pre {
+
+    }
+
+    figure {
+
+    }
+
+    ul {
+
+    }
+
+    ol {
+      list-style: none;
+      counter-reset: li;
+
+      li {
+        font-size: 20px;
+        counter-increment: li;
+        color: $color-text-blue;
+        @include font('bodyText');
+
+        &:before {
+          content: counter(li);
+          color: $color-text-blue;
+          display: inline-block;
+          width: 1em;
+          margin-left: -1em;
+        }
+      }
+    }
+
+    li {
+
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: $color-text-blue;
+      @include font('bodyText');
+    }
+
+    span {
+      font-size: inherit;
+      font-weight: inherit;
+      font-family: inherit;
+      color: inherit;
+    }
+
+    br {
+      display: block;
+      content: "";
+      border-bottom: 10px solid transparent; // Works in Chrome/Safari
+    }
+    @-moz-document url-prefix() {
+      br {
+        margin-bottom: 10px; // As 'border-bottom' doesn't work in firefox and 'margin-bottom' doesn't work in Chrome/Safari.
+      }
+    }
+
+    strong {
+      @include font('bodyTextHighlight');
+      color: $color-text-blue;
+    }
+
+    u {
+
+    }
+
+    a {
+      @include font('bodyText');
+      color: $color-text-blue;
+    }
+}

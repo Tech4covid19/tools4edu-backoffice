@@ -4,10 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { RichTextEditor } from "../../../../../components/RichTextEditor/RichTextEditor";
-import {convertFromHTML, EditorState, ContentState} from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
 import Button from "@material-ui/core/Button";
+import CustomTextEditor from "../../../../../components/CustomTextEditor/CustomTextEditor";
 
 const defaultInitialValues = {
     author: 0,
@@ -18,18 +16,10 @@ const defaultInitialValues = {
 
 const TestimonyForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, actionLabel }) => {
 
-    const blocksFromHTMLText = convertFromHTML(initialValues ? initialValues.text : '');
-
     return (
         <Formik
             initialValues={{
-                ...initialValues,
-                editorStateText: initialValues && initialValues.text !== '' ?
-                    new EditorState.createWithContent(ContentState.createFromBlockArray(
-                        blocksFromHTMLText.contentBlocks,
-                        blocksFromHTMLText.entityMap
-                    )) :
-                    new EditorState.createEmpty()
+                ...initialValues
             }}
             onSubmit={(values, { setSubmitting }) => {
 
@@ -40,10 +30,6 @@ const TestimonyForm = ({ initialValues = defaultInitialValues, onSubmit, onCance
                 delete valuesToSubmit.createdAt;
                 delete valuesToSubmit.updatedAt;
                 delete valuesToSubmit.__typename;
-
-                delete valuesToSubmit.editorStateText;
-
-                valuesToSubmit.text = stateToHTML(values.editorStateText.getCurrentContent());
 
                 onSubmit(valuesToSubmit)
             }}
@@ -82,14 +68,13 @@ const TestimonyForm = ({ initialValues = defaultInitialValues, onSubmit, onCance
                         />
                     </div>
                     <div className="input-single">
-                        <RichTextEditor
-                            name="text"
-                            editorStateName="editorStateText"
+                        <CustomTextEditor
                             label="Text"
-                            placeholder="Write here..."
-                            editorState={values.editorStateText}
-                            onChange={setFieldValue}
-                            onBlur={handleBlur} onFocus={handleFocus}
+                            placeholder="Write here"
+                            htmlContent={values.text}
+                            onContentChange={(value) => setFieldValue('text', value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">

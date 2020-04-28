@@ -146,6 +146,7 @@ const FAQPage = () => {
             <FormDialog
                 title="Create FAQ"
                 open={isCreatingItem}
+                onRequestCancel={() => setCreatingItem(false)}
                 formComponent={
                     <FAQForm
                         actionLabel="Create"
@@ -165,6 +166,7 @@ const FAQPage = () => {
             <FormDialog
                 title={`Edit '${isEditingItem ? isEditingItem.question : ''}'`}
                 open={!!isEditingItem}
+                onRequestCancel={() => setEditingItem(null)}
                 formComponent={
                     <FAQForm
                         actionLabel="Edit"

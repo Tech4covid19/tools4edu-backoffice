@@ -146,6 +146,7 @@ const ArticlePage = () => {
             <FormDialog
                 title="Create Blog Article"
                 open={isCreatingItem}
+                onRequestCancel={() => setCreatingItem(false)}
                 formComponent={
                     <ArticleForm
                         actionLabel="Create"
@@ -165,6 +166,7 @@ const ArticlePage = () => {
             <FormDialog
                 title={`Edit '${isEditingItem ? isEditingItem.title : ''}'`}
                 open={!!isEditingItem}
+                onRequestCancel={() => setEditingItem(null)}
                 formComponent={
                     <ArticleForm
                         actionLabel="Edit"

@@ -138,6 +138,7 @@ const TestimonyPage = () => {
             <FormDialog
                 title="Create Testimony"
                 open={isCreatingItem}
+                onRequestCancel={() => setEditingItem(false)}
                 formComponent={
                     <TestimonyForm
                         actionLabel="Create"
@@ -157,6 +158,7 @@ const TestimonyPage = () => {
             <FormDialog
                 title={`Edit '${isEditingItem ? isEditingItem.author : ''}'`}
                 open={!!isEditingItem}
+                onRequestCancel={() => setEditingItem(null)}
                 formComponent={
                     <TestimonyForm
                         actionLabel="Edit"

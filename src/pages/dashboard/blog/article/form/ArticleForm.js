@@ -5,10 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { RichTextEditor } from "../../../../../components/RichTextEditor/RichTextEditor";
-import {convertFromHTML, EditorState, ContentState} from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
 import Button from "@material-ui/core/Button";
+import CustomTextEditor from "../../../../../components/CustomTextEditor/CustomTextEditor";
 
 const defaultInitialValues = {
     title: '',
@@ -21,25 +19,11 @@ const defaultInitialValues = {
 };
 
 const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, actionLabel }) => {
-    const blocksFromHTMLSummary = convertFromHTML(initialValues ? initialValues.summary : '');
-    const blocksFromHTMLText = convertFromHTML(initialValues ? initialValues.text : '');
 
     return (
         <Formik
             initialValues={{
-                ...initialValues,
-                editorStateSummary: initialValues && initialValues.summary !== '' ?
-                    new EditorState.createWithContent(ContentState.createFromBlockArray(
-                        blocksFromHTMLSummary.contentBlocks,
-                        blocksFromHTMLSummary.entityMap
-                    )) :
-                    new EditorState.createEmpty(),
-                editorStateText: initialValues && initialValues.text !== '' ?
-                    new EditorState.createWithContent(ContentState.createFromBlockArray(
-                        blocksFromHTMLText.contentBlocks,
-                        blocksFromHTMLText.entityMap
-                    )) :
-                    new EditorState.createEmpty()
+                ...initialValues
             }}
             validationSchema={ArticleFormSchema}
             onSubmit={(values, { setSubmitting }) => {
@@ -52,9 +36,6 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
 
                 delete valuesToSubmit.editorStateText;
                 delete valuesToSubmit.editorStateSummary;
-
-                valuesToSubmit.summary = stateToHTML(values.editorStateSummary.getCurrentContent());
-                valuesToSubmit.text = stateToHTML(values.editorStateText.getCurrentContent());
 
                 onSubmit(valuesToSubmit)
             }}
@@ -103,25 +84,23 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
                         />
                     </div>
                     <div className="input-single">
-                        <RichTextEditor
-                            name="summary"
-                            editorStateName="editorStateSummary"
+                        <CustomTextEditor
                             label="Summary"
-                            placeholder="Write here..."
-                            editorState={values.editorStateSummary}
-                            onChange={setFieldValue}
-                            onBlur={handleBlur} onFocus={handleFocus}
+                            placeholder="Write here"
+                            htmlContent={values.text}
+                            onContentChange={(value) => setFieldValue('summary', value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">
-                        <RichTextEditor
-                            name="text"
-                            editorStateName="editorStateText"
+                        <CustomTextEditor
                             label="Text"
-                            placeholder="Write here..."
-                            editorState={values.editorStateText}
-                            onChange={setFieldValue}
-                            onBlur={handleBlur} onFocus={handleFocus}
+                            placeholder="Write here"
+                            htmlContent={values.text}
+                            onContentChange={(value) => setFieldValue('text', value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     </div>
 

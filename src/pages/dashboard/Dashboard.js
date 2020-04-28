@@ -24,6 +24,7 @@ import {
 import gql from "graphql-tag";
 import {useQuery} from "@apollo/react-hooks";
 import Button from "@material-ui/core/Button";
+import Sandbox from "./sandbox/Sandbox";
 
 const drawerWidth = 250;
 
@@ -156,6 +157,7 @@ const Dashboard = ({ match, authService, history }) => {
             <main className={classes.content}>
                 <Toolbar />
                 <Switch>
+                    <Route path={"/"} exact component={Sandbox}/>
                     <Route path={match.url + "content-items"} component={ContentItemPage}/>
                     <Route path={match.url + "faqs"} component={FAQPage}/>
                     <Route path={match.url + "providers"} component={ProviderPage}/>

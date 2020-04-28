@@ -7,11 +7,9 @@ import Switch from "@material-ui/core/Switch";
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { RichTextEditor } from "../../../../../components/RichTextEditor/RichTextEditor";
-import {convertFromHTML, EditorState, ContentState} from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
 import Button from "@material-ui/core/Button";
 import {useDashboardState} from "../../../DashboardState";
+import CustomTextEditor from "../../../../../components/CustomTextEditor/CustomTextEditor";
 
 const defaultInitialValues = {
     order: 0,
@@ -31,24 +29,13 @@ const defaultInitialValues = {
 const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, actionLabel }) => {
     const [{ stakeholders, providers, tags }] = useDashboardState();
 
-    const blocksFromHTML = convertFromHTML(initialValues ? initialValues.text : '');
-
-    const [formType, setFormType] = React.useState(null)
-
     return (
         <Formik
             initialValues={{
-                ...initialValues,
-                editorState: initialValues && initialValues.text !== '' ?
-                    new EditorState.createWithContent(ContentState.createFromBlockArray(
-                        blocksFromHTML.contentBlocks,
-                        blocksFromHTML.entityMap
-                    )) :
-                    new EditorState.createEmpty()
+                ...initialValues
             }}
             validationSchema={ContentItemFormSchema}
             onSubmit={(values, { setSubmitting }) => {
-
 
                 let valuesToSubmit = {...values};
 
@@ -57,12 +44,9 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                 delete valuesToSubmit.updatedAt;
                 delete valuesToSubmit.__typename;
 
-                delete valuesToSubmit.editorState;
                 delete valuesToSubmit.providers;
                 delete valuesToSubmit.stakeholders;
                 delete valuesToSubmit.tags;
-
-                valuesToSubmit.text = stateToHTML(values.editorState.getCurrentContent());
 
                 valuesToSubmit.providerIds = values.providers ? values.providers.map(p => p.id) : [];
                 valuesToSubmit.stakeholderIds = values.stakeholders ? values.stakeholders.map(s => s.id) : [];
@@ -162,14 +146,13 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                         />
                     </div>
                     <div className="input-single">
-                        <RichTextEditor
-                            name="text"
-                            editorStateName="editorState"
+                        <CustomTextEditor
                             label="Text"
-                            placeholder="Write here..."
-                            editorState={values.editorState}
-                            onChange={setFieldValue}
-                            onBlur={handleBlur} onFocus={handleFocus}
+                            placeholder="Write here"
+                            htmlContent={values.text}
+                            onContentChange={(value) => setFieldValue('text', value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">

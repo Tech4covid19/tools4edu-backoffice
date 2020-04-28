@@ -1,3 +1,5 @@
+@import '../../theme/index';
+
 .RichEditor-root {
   background: #fff;
   border: 1px solid #ddd;
@@ -49,6 +51,26 @@
   font-size: 14px;
   margin-bottom: 5px;
   user-select: none;
+
+  &__mainTitle {
+    @include font('mainTitles');
+  }
+
+  &__title1 {
+    @include font('title1');
+  }
+
+  &__title2 {
+    @include font('title2');
+  }
+
+  &__title3 {
+    @include font('title3');
+  }
+
+  &__bodyLarge {
+    @include font('bodyTextLarge');
+  }
 }
 
 .RichEditor-styleButton {

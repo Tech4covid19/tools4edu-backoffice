@@ -1,0 +1,15 @@
+.sandbox {
+  .text-editor-container {
+    max-width: 1280px;
+    margin: 120px auto;
+
+    .demo-wrapper {
+      min-height: 250px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 250px;
+    }
+  }
+}
