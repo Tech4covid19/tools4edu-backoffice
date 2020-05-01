@@ -13,7 +13,7 @@ import Toast from "../../../../components/Toast/Toast";
 
 const GET_CONTENT_ITEMS = gql`
     query GetContentItems {
-        contentItems {
+        contentItems(limit: 200) {
             id,
             type,
             order,
