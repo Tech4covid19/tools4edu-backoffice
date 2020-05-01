@@ -12,7 +12,7 @@ import Toast from "../../../../components/Toast/Toast";
 
 const GET_FAQS = gql`
     query GetFaqs {
-        faqs {
+        faqs(limit: 200) {
             id,
             order,
             question,
