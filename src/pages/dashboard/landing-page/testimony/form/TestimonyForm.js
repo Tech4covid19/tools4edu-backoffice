@@ -74,7 +74,6 @@ const TestimonyForm = ({ initialValues = defaultInitialValues, onSubmit, onCance
                             htmlContent={values.text}
                             onContentChange={(value) => setFieldValue('text', value)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">

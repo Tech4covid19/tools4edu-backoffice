@@ -79,7 +79,6 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                             htmlContent={values.question}
                             onContentChange={(value) => setFieldValue('question', value)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">
@@ -89,7 +88,6 @@ const FAQForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, act
                             htmlContent={values.answer}
                             onContentChange={(value) => setFieldValue('answer', value)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                         />
                     </div>
 

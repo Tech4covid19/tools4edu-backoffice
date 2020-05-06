@@ -275,6 +275,7 @@
     }
 
     a {
+      @include font('bodyText');
       color: $color-text-blue;
       text-decoration: underline;
     }

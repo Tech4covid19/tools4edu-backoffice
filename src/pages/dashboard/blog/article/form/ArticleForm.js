@@ -15,7 +15,8 @@ const defaultInitialValues = {
     images: '',
     text: '',
     slug: '',
-    published: false
+    published: false,
+    videoUrl: ''
 };
 
 const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel, actionLabel }) => {
@@ -33,9 +34,6 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
                 delete valuesToSubmit.createdAt;
                 delete valuesToSubmit.updatedAt;
                 delete valuesToSubmit.__typename;
-
-                delete valuesToSubmit.editorStateText;
-                delete valuesToSubmit.editorStateSummary;
 
                 onSubmit(valuesToSubmit)
             }}
@@ -84,13 +82,22 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
                         />
                     </div>
                     <div className="input-single">
+                        <TextField name="videoUrl" label="Video URL"
+                                   fullWidth
+                                   value={values.videoUrl}
+                                   onChange={handleChange} onBlur={handleBlur} onFocus={handleFocus}
+                                   error={!!errors.videoUrl && touched.videoUrl}
+                                   helperText={errors.videoUrl && touched.videoUrl ? errors.videoUrl : ''}
+                                   variant="outlined"
+                        />
+                    </div>
+                    <div className="input-single">
                         <CustomTextEditor
                             label="Summary"
                             placeholder="Write here"
-                            htmlContent={values.text}
+                            htmlContent={values.summary}
                             onContentChange={(value) => setFieldValue('summary', value)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">
@@ -100,7 +107,6 @@ const ArticleForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel,
                             htmlContent={values.text}
                             onContentChange={(value) => setFieldValue('text', value)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                         />
                     </div>
 

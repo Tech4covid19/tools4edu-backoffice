@@ -1,5 +1,5 @@
 export const toolbarConfig = {
-    options: ['inline', 'blockType', 'list', 'textAlign', 'link', 'image', 'history'],
+    options: ['image', 'link', 'inline', 'blockType', 'list', 'textAlign'],
     inline: {
         inDropdown: false,
         className: undefined,

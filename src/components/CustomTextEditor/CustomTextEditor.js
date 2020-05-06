@@ -6,7 +6,7 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import {toolbarConfig} from "./config";
 
-const CustomTextEditor = ({ htmlContent, onContentChange, onBlur, onFocus, showPreview, placeholder, label }) => {
+const CustomTextEditor = ({ htmlContent, onContentChange = () => {}, onBlur, onFocus, showPreview, placeholder, label }) => {
 
     const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
@@ -22,11 +22,10 @@ const CustomTextEditor = ({ htmlContent, onContentChange, onBlur, onFocus, showP
         }
     }, [ htmlContent ])
 
+
     const onEditorStateChange = (newState) => {
         setEditorState(newState);
-        if (onContentChange) {
-            onContentChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));
-        }
+        onContentChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     }
 
     return (
@@ -37,7 +36,9 @@ const CustomTextEditor = ({ htmlContent, onContentChange, onBlur, onFocus, showP
             <Editor
                 placeholder={placeholder || ''}
                 toolbar={toolbarConfig}
-                onBlur={onBlur}
+                onBlur={() => {
+                    onContentChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+                }}
                 onFocus={onFocus}
                 editorState={editorState}
                 wrapperClassName="t4e-editor-wrapper"

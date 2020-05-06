@@ -152,7 +152,6 @@ const ContentItemForm = ({ initialValues = defaultInitialValues, onSubmit, onCan
                             htmlContent={values.text}
                             onContentChange={(value) => setFieldValue('text', value)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                         />
                     </div>
                     <div className="input-single">
